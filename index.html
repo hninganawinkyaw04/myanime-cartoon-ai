@@ -2,135 +2,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Magic Studio</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #100d24;
-      color: white;
-    }
-    .card {
-      max-width: 520px;
-      margin: 25px auto;
-      padding: 24px;
-      background: #211a3d;
-      border-radius: 20px;
-    }
-    h1 {
-      color: #d9a7ff;
-      text-align: center;
-    }
-    .subtitle {
-      text-align: center;
-      color: #d2c8e8;
-    }
-    label {
-      display: block;
-      margin-top: 18px;
-    }
-    textarea, select, button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 9px;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-    button {
-      border: none;
-      background: #a56bff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #result {
-      margin-top: 18px;
-      padding: 12px;
-      background: #30254c;
-      border-radius: 10px;
-      line-height: 1.6;
-    }
-    .note {
-      font-size: 13px;
-      color: #d2c8e8;
-      line-height: 1.6;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI Cartoon Studio</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 18px;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: linear-gradient(135deg,#100d24,#352052);
+}
+.card {
+  max-width: 520px;
+  margin: 15px auto;
+  padding: 22px;
+  background: #211a3d;
+  border-radius: 20px;
+}
+h1 { color: #e2b6ff; text-align: center; }
+p { line-height: 1.6; color: #ddd4ee; }
+label { display: block; margin-top: 16px; }
+textarea, select, button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 16px;
+}
+textarea { min-height: 120px; }
+button {
+  margin-top: 20px;
+  background: #a56bff;
+  color: white;
+  font-weight: bold;
+}
+#result {
+  white-space: pre-wrap;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #30254c;
+}
+.note { font-size: 13px; }
+</style>
 </head>
 <body>
-  <main class="card">
-    <h1>✨ Anime Magic Studio</h1>
-    <p class="subtitle">Bring your fantasy story to life!</p>
+<div class="card">
+<h1>✨ AI Cartoon Studio</h1>
+<p>Create your own cartoon story!</p>
 
-    <label for="story">Describe your anime story</label>
-    <textarea id="story" placeholder="Example: A princess discovers a magical power..."></textarea>
+<label for="style">Choose Cartoon Style</label>
+<select id="style">
+<option>Anime</option>
+<option>2D Cartoon</option>
+<option>3D Cartoon</option>
+<option>Fantasy Cartoon</option>
+<option>Fairy Tale</option>
+<option>Animal Cartoon</option>
+<option>Adventure Cartoon</option>
+<option>Action and Fighting</option>
+</select>
 
-    <label for="style">Choose your anime style</label>
-    <select id="style">
-      <option>Fantasy Magic</option>
-      <option>Anime Princess</option>
-      <option>Action and Fighting</option>
-      <option>Magical Kingdom</option>
-    </select>
+<label for="story">Describe Your Story</label>
+<textarea id="story" placeholder="Example: A princess discovers magical powers and saves her kingdom..."></textarea>
 
-    <label for="duration">Video duration</label>
-    <select id="duration">
-      <option>30 seconds</option>
-      <option>1 minute</option>
-      <option>5 minutes</option>
-    </select>
+<label for="duration">Choose Video Length</label>
+<select id="duration">
+<option>30 seconds</option>
+<option>1 minute</option>
+<option>3 minutes</option>
+<option>5 minutes</option>
+</select>
 
-    <button onclick="createStory()">Create My Anime Plan</button>
+<button onclick="createPlan()">Create My Cartoon Plan</button>
+<div id="result" hidden></div>
 
-    <div id="result" hidden></div>
+<p class="note">This is a free website prototype. Actual AI video generation requires connecting an AI video service.</p>
+</div>
 
-    <p class="note">
-      This is a free website prototype. It prepares your story idea,
-      but does not generate an actual video yet.
-    </p>
-  </main>
+<script>
+function createPlan() {
+  const style = document.getElementById("style").value;
+  const story = document.getElementById("story").value.trim();
+  const duration = document.getElementById("duration").value;
+  const result = document.getElementById("result");
 
-  <script>
-    function createStory() {
-      const story = document.getElementById("story").value.trim();
-      const style = document.getElementById("style").value;
-      const duration = document.getElementById("duration").value;
-      const result = document.getElementById("result");
+  result.hidden = false;
 
-      result.hidden = false;
+  if (!story) {
+    result.textContent = "Please write your story first.";
+    return;
+  }
 
-      if (!story) {
-        result.textContent = "Please describe your anime story first.";
-        return;
-      }
-
-      result.replaceChildren();
-
-      const heading = document.createElement("h3");
-      heading.textContent = "Your Anime Project ✨";
-
-      const details = document.createElement("p");
-      details.textContent =
-        "Style: " + style +
-        " | Duration: " + duration;
-
-      const description = document.createElement("p");
-      description.textContent = "Story idea: " + story;
-
-      const prompt = document.createElement("p");
-      prompt.textContent =
-        "Next step: Turn this idea into scenes, then connect an AI video generation service.";
-
-      result.append(heading, details, description, prompt);
-    }
-  </script>
+  result.textContent =
+    "YOUR CARTOON PROJECT\n\n" +
+    "Style: " + style + "\n" +
+    "Duration: " + duration + "\n\n" +
+    "Your Story:\n" + story + "\n\n" +
+    "Next step: Connect an AI video generator to create the actual video.";
+}
+</script>
 </body>
-</html>
+  </html>
+                   
